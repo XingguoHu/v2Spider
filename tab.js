@@ -6,18 +6,15 @@ function getCateList($) {
         return (index !== 0) && ($(this).attr('class') !== 'inner');
     }).each(function(index){
         let $this = $(this);
-        const cateItem = {
-            name: $this.find('span.fade').text(),
-            subCateList: [],
-        };
+        let fCate = $this.find('span.fade').text();
         $this.find('a').each(function(){
             let $this = $(this);
-            cateItem.subCateList.push({
+            cateList.push({
                 name: $this.text(),
-                value: $this.attr('href').split('/')[2]
+                value: $this.attr('href').split('/')[2],
+                fCate
             });
         });
-        cateList.push(cateItem);
     });
     return cateList;
 }
@@ -32,7 +29,7 @@ function getTabList($){
         const $this = $(this);
         const tab = {
             value: $this.attr('href').split('=')[1],
-            name: $this.text()
+            name: $this.text(),
         }
         tabList.push(tab);
     })

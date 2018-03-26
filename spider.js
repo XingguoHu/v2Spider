@@ -25,9 +25,9 @@ async function run() {
     let baseUrl = 'https://www.v2ex.com/', $ = null, tabList = [], cateList = [];
     $ = cheerio.load(await loadHtml(baseUrl));
     tabList = tab.getTabList($);
-    // await CateModel.create(tabList, 'tab');
-    // cateList = tab.getCateList($);
-    // await CateModel.create(cateList, 'subCate');
+    await CateModel.create(tabList, 'tab');
+    cateList = tab.getCateList($);
+    await CateModel.create(cateList, 'subCate');
     
     
     //get tab page articlelist
@@ -36,7 +36,7 @@ async function run() {
         url = `${baseUrl}?tab=${value}`;
         $ = cheerio.load(await loadHtml(url));
         let articleList = tab.getArticleList($);
-        await ArticleModel.create(articleList);
+        await ArticleModel.create(articleList, value, 'tab');
     }
 
 

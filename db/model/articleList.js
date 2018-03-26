@@ -17,19 +17,23 @@ const articleScheme = mongoose.Schema({
         link: String,
         time: String
     },
-    replayNumber: Number
+    replayNumber: Number,
+    type: '',
+    cate: ''
 });
 
-const Article = mongoose.model('article', articleScheme);
+const ArticleModel = mongoose.model('article', articleScheme);
 
 
 module.exports = {
-    async create(aricleList){
-        for (let aticle of aricleList) {
-            let articleModel = await Article.findOne({ title: aticle.title });
-            if (!articleModel) {
-                articleModel = new Article(aticle);
-                await articleModel.save();
+    async create(aricleList, cate, type){
+        for (let article of aricleList) {
+            let Article = await ArticleModel.findOne({ title: article.title });
+            if (!Article) {
+                article.type = type;
+                article.cate = cate;
+                Article = new ArticleModel(article);
+                await Article.save();
             }
         } 
     }

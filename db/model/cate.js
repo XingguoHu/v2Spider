@@ -7,16 +7,16 @@ const CateSchema = new mongoose.Schema({
     type: String
 });
 
-const Cate = mongoose.model('Cate', CateSchema);
+const cateMoel = mongoose.model('cate', CateSchema);
 
 module.exports = {
     async create(cateList, type = 'tab'){
         for (let cate of cateList){
-            let cateModel = await Cate.findOne({value: cate.value, type});
-            if (!cateModel){
+            let Cate = await cateMoel.findOne({value: cate.value, type});
+            if (!Cate){
                 cate.type = type;
-                cateModel = new Cate(cate);
-                await cateModel.save();
+                Cate = new cateMoel(cate);
+                await Cate.save();
             }
         } 
     }

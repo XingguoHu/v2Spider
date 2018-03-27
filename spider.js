@@ -2,6 +2,7 @@ const rp = require('request-promise');
 const cheerio = require('cheerio');
 const tab = require('./tab');
 const cate = require('./cate');
+const article = require('./article');
 const mongoose = require('mongoose');
 const con = mongoose.connection;
 const CateModel = require('./db/model/cate');
@@ -22,22 +23,26 @@ async function loadHtml(url) {
 
 
 async function run() {
-    let baseUrl = 'https://www.v2ex.com/', $ = null, tabList = [], cateList = [];
+    let baseUrl = 'https://www.v2ex.com/t/441758', $ = null, tabList = [], cateList = [];
     $ = cheerio.load(await loadHtml(baseUrl));
-    tabList = tab.getTabList($);
-    await CateModel.create(tabList, 'tab');
-    cateList = tab.getCateList($);
-    await CateModel.create(cateList, 'subCate');
+    article.getArticleContent($);
     
-    
-    //get tab page articlelist
 
-    for(let {value} of tabList){
-        url = `${baseUrl}?tab=${value}`;
-        $ = cheerio.load(await loadHtml(url));
-        let articleList = tab.getArticleList($);
-        await ArticleModel.create(articleList, value, 'tab');
-    }
+
+    // tabList = tab.getTabList($);
+    // await CateModel.create(tabList, 'tab');
+    // cateList = tab.getCateList($);
+    // await CateModel.create(cateList, 'subCate');
+    
+    
+    // //get tab page articlelist
+
+    // for(let {value} of tabList){
+    //     url = `${baseUrl}?tab=${value}`;
+    //     $ = cheerio.load(await loadHtml(url));
+    //     let articleList = tab.getArticleList($);
+    //     await ArticleModel.create(articleList, value, 'tab');
+    // }
 
 
     //return cate.getArticleList($);

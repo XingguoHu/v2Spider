@@ -12,12 +12,12 @@ const articleScheme = mongoose.Schema({
         link: String,
         name: String
     },
-    lastReplay: {
+    lastReply: {
         name: String,
         link: String,
         time: String
     },
-    replayNumber: Number,
+    replyNumber: Number,
     type: '',
     cate: ''
 });

@@ -4,7 +4,7 @@ function getArticleList($, queryNode){
         const $title = $(this).find('.item_title a');
         const $node = $(this).find('.node');
         const $user = $($(this).find('strong a')[0]);
-        const $lastReplay = $($(this).find('strong a')[1]);
+        const $lastReply = $($(this).find('strong a')[1]);
         const $strongNext = $(this).find('.small.fade strong')[0].next;
         const article = {
             avatar: $(this).find('img').attr('class', 'avatar').attr('src'),
@@ -18,12 +18,12 @@ function getArticleList($, queryNode){
                 link: $user.attr('href'),
                 name: $user.text()
             },
-            lastReplay: {
-                name: $lastReplay.text(),
-                link: $lastReplay.attr('href'),
+            lastReply: {
+                name: $lastReply.text(),
+                link: $lastReply.attr('href'),
                 time: $strongNext ? $strongNext.data.replace(/\s*/g, '').split('•')[1] : ''
             },
-            replayNumber: parseInt($(this).find('tr').children().last().find('a').text() || 0)
+            replyNumber: parseInt($(this).find('tr').children().last().find('a').text() || 0)
         };
         list.push(article);
     });

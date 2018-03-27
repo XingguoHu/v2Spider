@@ -7,6 +7,11 @@ const mongoose = require('mongoose');
 const con = mongoose.connection;
 const CateModel = require('./db/model/cate');
 const ArticleModel = require('./db/model/articleList');
+const EventEmitter = require('events');
+const myEmitter = new EventEmitter();
+
+
+
 
 mongoose.connect('mongodb://localhost/v2');
 
@@ -64,11 +69,24 @@ async function run() {
 
 con.once('open', async _ => {
     //成功连接
-    console.log('----------------mongo connect success----------------');
+    console.log('----------------mongo connect----------------');
     console.log('----------------spider run----------------');
-    await run();
+    con.on('error', function (err) {
+        myEmitter.emit('error', err);
+    });
+    try{
+        await run();
+    }catch(err){
+        myEmitter.emit('error', err);
+    }
     console.log('-----------------end-----------------');    
 })
+
+
+myEmitter.on('error', (err) => {
+    //TODO add logger
+    console.error('whoops! there was an error\n', err);
+});
 
 
 
